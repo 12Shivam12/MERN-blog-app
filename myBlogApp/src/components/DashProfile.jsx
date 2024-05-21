@@ -57,7 +57,7 @@ const DashProfile = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageFile(downloadURL)
+          setImageFile(downloadURL);
         })
       }
     )
