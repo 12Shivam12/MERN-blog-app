@@ -7,10 +7,11 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signoutSuccess, updateFailure, updateStart, updateSuccess } from '../redux/user/userSlice'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
+import {Link} from 'react-router-dom'
 
 const DashProfile = () => {
 
-  const { currentUser, error } = useSelector((state) => state.user)
+  const { currentUser, error, loading } = useSelector((state) => state.user)
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -138,7 +139,7 @@ const DashProfile = () => {
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);
-      }else{
+      } else {
         dispatch(signoutSuccess());
       }
     } catch (error) {
@@ -196,9 +197,26 @@ const DashProfile = () => {
         <TextInput type='email' id='email' placeholder='email'
           onChange={handleChange} defaultValue={currentUser.email} />
         <TextInput type='password' id='password' placeholder='password' onChange={handleChange} />
-        <Button type='submit' gradientDuoTone='purpleToBlue' outline>
-          Update
+        <Button
+          type='submit'
+          gradientDuoTone='purpleToBlue'
+          outline
+          disabled={loading || imageFileUploading} 
+          >
+            {loading ? 'Loading...' : 'Update'}
         </Button>
+        {
+          currentUser.isAdmin && (
+            <Link to={'/create-post'}>
+              <Button
+                type='button'
+                gradientDuoTone='purpleToPink'
+                className='w-full'>
+                Create a post
+              </Button>
+            </Link>
+          )
+        }
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span className='cursor-pointer' onClick={() => setShowModal(true)}>Delete Account</span>
