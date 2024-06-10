@@ -19,7 +19,7 @@ const FooterComp = () => {
                             <Footer.Title title='About' />
                             <Footer.LinkGroup col>
                                 <Footer.Link href='#'>
-                                    100 JS Projects
+                                    careers
                                 </Footer.Link>
                                 <Footer.Link href='#'>
                                     Shivam's Blog
